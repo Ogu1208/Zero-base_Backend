@@ -38,6 +38,7 @@ public class Practice {
         car.horn();
 
 
+        // for-each 사용
         Car car2[] = {new Car(), new FireTruck(), new Ambulance()};
 
         for(Car item: car2) {

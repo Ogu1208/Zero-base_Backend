@@ -14,17 +14,66 @@ abstract class Device {
 }
 
 // UsbPort1 클래스
-
+class UsbPort1 extends Device {
+    UsbPort1(int id) {
+        this.deviceId = id;
+    }
+//    int deviceId;
+    void deviceInfo(){
+        System.out.println("id = " + this.deviceId);
+    }
+    void connect(){
+        System.out.println("연결하였습니다.");
+    }
+    void disconnect(){
+        System.out.println("연결이 해제되었습니다.");
+    }
+    void send(){
+        System.out.println("데이터를 전송합니다.");
+    }
+    void receive(){
+        System.out.println("데이터를 수신합니다.");
+    }
+}
 
 // WiFi 클래스
+class WiFi extends Device{
+    WiFi(int id) {
+        this.deviceId = id;
+    }
 
+    @Override
+    void deviceInfo() {
+
+    }
+
+    @Override
+    void connect() {
+
+    }
+
+    @Override
+    void disconnect() {
+
+    }
+
+    @Override
+    void send() {
+
+    }
+
+    @Override
+    void receive() {
+
+    }
+}
 
 public class Practice {
 
     public static void main(String[] args) {
         // Test code
-//        UsbPort1 usb1 = new UsbPort1(1);
-//        WiFi wifi = new WiFi(0);
+        UsbPort1 usb1 = new UsbPort1(1);
+        WiFi wifi = new WiFi(0);
     }
 
 }
