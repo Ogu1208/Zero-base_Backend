@@ -25,11 +25,13 @@ public class Main {
         }
 
         System.out.println("== forEach ==");
-        for (String item: arr) {
+        for (String item : arr) {
             System.out.println(item);
         }
 
         System.out.println("== to Stream ==");
+        Stream stream1 = Arrays.stream(arr);
+        stream1.forEach(System.out::println);
 
 
 //      1-2. 컬렉션 스트림
@@ -37,65 +39,87 @@ public class Main {
         ArrayList list1 = new ArrayList(Arrays.asList(1, 2, 3));
         System.out.println("list1 = " + list1);
 
+        Stream stream2 = list1.stream();
+
         System.out.println("== to Stream ==");
+//        stream2.forEach(System.out::println);
+        stream2.forEach(num -> System.out.println("num = " + num));
 
 
 //      1-3. 스트림 builder
         System.out.println("== 스트림 builder ==");
-
+        Stream streamBuilder = Stream.builder().add(1).add(2).add(3).build();
+        streamBuilder.forEach(System.out::println);
 
 
 //      1-4. 스트림 generate
         System.out.println("== 스트림 generate ==");
-
+        Stream streamGenerate = Stream.generate(() -> "abc").limit(3);
+        streamGenerate.forEach(System.out::println);
 
 
 //      1-5. 스트림 iterate
         System.out.println("== 스트림 iterate ==");
+        Stream streamIterate = Stream.iterate(10, n -> n * 2).limit(3);
+        streamIterate.forEach(System.out::println);
 
 
-
-//      1-6. 기본 타입 스트림
+//      1-6. 기본 타입 스트림 range
         System.out.println("== 기본타입 스트림 ==");
-
+        IntStream intStream = IntStream.range(1, 5);    // 1부터 4까지 생성
+//        IntStream intStream = IntStream.rangeClosed(1, 5);    // 1부터 5까지 포함해서 생성
+        intStream.forEach(System.out::println);
 
 
 //      2. 스트림 중개 연산
 
 //      2-1. Filtering
         System.out.println("== Filtering ==");
-
+        IntStream intStream2 = IntStream.range(1, 10).filter(n -> n % 2 == 0);   // 짝수만 선별
+        intStream2.forEach(System.out::println);
 
 
 //      2-2. Mapping
         System.out.println("== Mapping ==");
-
+        IntStream intStream3 = IntStream.range(1, 10).map(n -> n + 1);
+        intStream3.forEach(n -> System.out.print(n + " "));
+        System.out.println();
 
 
 //      2-3. Sorting
         System.out.println("== Sorting ==");
-
+        IntStream intStream4 = IntStream.builder().add(5).add(1).add(3).add(4).add(2).build();
+        IntStream intStreamSort = intStream4.sorted();
+        intStreamSort.forEach(System.out::println);
 
 
 //      3. 최종 연산
 
 //      3-1. Sum, Average
         System.out.println("== sum, average ==");
-
+        int sum = IntStream.range(1, 5).sum();
+        System.out.println("sum = " + sum);
+        double average = IntStream.range(1, 5).average().getAsDouble();   // getDouble()을 사용해야 Double로 값을 가져옴
+        System.out.println("average = " + average);
 
 
 //      3-2. Min, Max
         System.out.println("== min, max ==");
-
+        int min = IntStream.range(1, 5).min().getAsInt();
+        System.out.println("min = " + min);
+        int max = IntStream.range(1, 5).max().getAsInt();
+        System.out.println("max = " + max);
 
 
 //      3-3. reduce
         System.out.println("== reduce ==");
-
+        Stream<Integer> stream3 = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)).stream();
+        System.out.println(stream3.reduce((x, y) -> x + y).get());   // 연쇄적 합
 
 
 //      3-4. forEach
         System.out.println("== forEach == ");
+        IntStream.range(1, 10).filter(n -> n == 5).forEach(System.out::println);
 
 
     }
