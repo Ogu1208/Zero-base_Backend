@@ -29,9 +29,10 @@ Practice3
 |"abc"|"L L L P x L B P y"|"yxabc"|
 |"a"|"B B L L D D P a P b P c"|"abc"|
 
+-![18_2_4](https://user-images.githubusercontent.com/76902448/188324311-30a988e4-8eab-4b66-9279-deab617a6275.png)
 
 Solution
----
+--
 <details>
 <summary>Solution 보기</summary>
 <div markdown="1">
