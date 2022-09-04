@@ -48,8 +48,12 @@ Solution
 
 미리 발생할 수 있는 특수한 케이스들에 대해서 미리 정리한다.
  
-ex) `IV` : 4, 'IX` : 9 등
- 
+ex) `IV` : 4, `IX` : 9 등
+``` java
+   String[] roman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+   int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
+```
 
 
 </div>
@@ -62,51 +66,34 @@ Answer
 <div markdown="1">
 
 ``` java
-package Java_18_1;
-
-import java.util.Scanner;
-
 public class Practice2 {
-    public static void solution() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("알파벳 입력: ");
-        char input = sc.nextLine().charAt(0);
-        int output = 0;
 
-        int step = (int) 'a' - 'A';
+    public static String solution(int num) {
+        String result = "";
+        String[] roman = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
-        if (input >= 'a' && input <= 'z') {
-            output = (int) input - step;
-            System.out.println("대문자 변환: " + (char) output);
-        } else if (input >= 'A' && input <= 'Z') {
-            output = (int) input + step;
-            System.out.println("소문자 변환: " + (char) +output);
-        } else {
-            System.out.println("입력하신 값이 알파벳이 아닙니다.");
+        int i = 0;
+        while (num > 0) {
+            while(num >= values[i]) {
+                num -= values[i];
+                result += roman[i];
+            }
+            i++;
         }
-
-
-    }
-
-    public static void reference() {
-        int a = (int) 'a';
-        System.out.println("a = " + a);
-        int z = (int) 'z';
-        System.out.println("z = " + z);
-        int A = (int) 'A';
-        System.out.println("A = " + A);
-        int Z = (int) 'Z';
-        System.out.println("Z = " + Z);
-        int etc = (int) '%';
-        System.out.println("etc = " + etc);
+        return result;
     }
 
     public static void main(String[] args) {
-        reference();    // 아스키 코드 참고
-        solution();
+        // Test code
+        System.out.println(solution(3));
+        System.out.println(solution(4));
+        System.out.println(solution(6));
+        System.out.println(solution(13));
+        System.out.println(solution(26));
+        System.out.println(solution(1994));
     }
 }
-
 
 
 ```
