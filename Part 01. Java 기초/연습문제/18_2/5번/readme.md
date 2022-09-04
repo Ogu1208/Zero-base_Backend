@@ -24,6 +24,7 @@ N 명의 아이들에 대한 점수 표가 ratings 배열에 주어질 때,
 |1 2 2|4|
 |1, 3, 5, 3, 1, 3, 5, 7, 5, 3, 1, 0|29|
 
+![18_5](https://user-images.githubusercontent.com/76902448/188325601-a5c8e157-3aa0-407f-be0b-41dd3eacb259.png)
 
 
 Solution
