@@ -48,7 +48,25 @@ Solution
 
 <h4> 🍑 키워드 : 아스키 모드, if문 </h4>
 
+앞의 문자, 뒤의 문자를 비교해서 뒤의 문자보다 크면 더하고, 작으면 뺀다. 
 
+마지막 문자는 그냥 더한다.
+ 
+ex) `MCMXCIV` : 1994
+ 
+`M` 은 C보다 커서 더한다. 1000
+
+`C`  M보다 작으니까 C(100)만큼  뺀다.   —- 1000 - 100 = **900**
+
+`M`  X보다 크니까 1000을 더한다.   900 + 1000 = 1900
+
+`X` C보다 작으니까 뺀다. 1900 - 10 = 1890
+
+`C` I보다 크니까 더한다. 1890 + 100 - 1990
+
+`I` V보다 작으니까 뺸다. 1990 - 1 = 1989
+
+`V` 마지막 문자는 그냥 더한다. 1989 + 5 = 1994
 
 
 </div>
@@ -61,51 +79,43 @@ Answer
 <div markdown="1">
 
 ``` java
-package Java_18_1;
+import java.util.HashMap;
 
-import java.util.Scanner;
+public class Practice1 {
+    public static void solution(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
 
-public class Practice2 {
-    public static void solution() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("알파벳 입력: ");
-        char input = sc.nextLine().charAt(0);
-        int output = 0;
-
-        int step = (int) 'a' - 'A';
-
-        if (input >= 'a' && input <= 'z') {
-            output = (int) input - step;
-            System.out.println("대문자 변환: " + (char) output);
-        } else if (input >= 'A' && input <= 'Z') {
-            output = (int) input + step;
-            System.out.println("소문자 변환: " + (char) +output);
-        } else {
-            System.out.println("입력하신 값이 알파벳이 아닙니다.");
+        int sum = 0;
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (map.get(arr[i]) < map.get(arr[i + 1])) {
+                sum -= map.get(arr[i]);
+            } else {
+                sum += map.get(arr[i]);
+            }
         }
+        sum += map.get(arr[arr.length - 1]);   // 마지막 값 더해주기
+        System.out.println(sum);
 
-
-    }
-
-    public static void reference() {
-        int a = (int) 'a';
-        System.out.println("a = " + a);
-        int z = (int) 'z';
-        System.out.println("z = " + z);
-        int A = (int) 'A';
-        System.out.println("A = " + A);
-        int Z = (int) 'Z';
-        System.out.println("Z = " + Z);
-        int etc = (int) '%';
-        System.out.println("etc = " + etc);
     }
 
     public static void main(String[] args) {
-        reference();    // 아스키 코드 참고
-        solution();
+        // Test code
+        solution("III");
+        solution("IV");
+        solution("VI");
+        solution("XIII");
+        solution("XXVI");
+        solution("MCMXCIV");
     }
 }
-
 
 
 ```
