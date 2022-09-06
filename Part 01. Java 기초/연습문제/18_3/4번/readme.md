@@ -7,7 +7,7 @@ Practice4
 MxN 행렬 정보가 2차원 정수형 배열 matrix 에 주어지면  
 아래 그림과 같이 나선형 모양으로 출력하는 프로그램을 작성하세요.
 
-![img_1.png](../imgs/img_1.png)
+![img_1](https://user-images.githubusercontent.com/76902448/188673952-9f350530-ca98-4531-bc80-f82eeaa3d192.png)
 
 입출력 예시
 ---
