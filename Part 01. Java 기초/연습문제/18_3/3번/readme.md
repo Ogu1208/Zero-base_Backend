@@ -25,6 +25,8 @@ Solution
 ---
 ![18_3_3](https://user-images.githubusercontent.com/76902448/188659333-99a4ef46-07c6-41b0-9176-fb02041421c5.png)
 
+참고 URL
+- https://www.techiedelight.com/ko/find-k-closest-elements-to-given-value-array/
 
 <details>
 <summary>Solution 보기</summary>
