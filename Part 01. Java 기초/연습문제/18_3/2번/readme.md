@@ -29,7 +29,7 @@ Solution
 <summary>Solution 보기</summary>
 <div markdown="1">
 
-<h4> 🍑 키워드 : Math.abs(), 값을 index로 보기 </h4>
+<h4> 🍑 키워드 : Math.abs(), 값을 index로 보기, 음수 </h4>
 
 
 </div>
