@@ -15,18 +15,41 @@ public class JavaMini3 {
         int price;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("[입장권 계산]");
-        System.out.print("나이를 입력해 주세요.(숫자): ");
-        age = sc.nextInt();
-        System.out.print("입장시간을 입력해 주세요.(숫자입력): ");
-        admission = sc.nextInt();
-        System.out.print("국가유공자 여부를 입력해 주세요.(y/n): ");
-        nationalMerit = sc.next().charAt(0);
-        System.out.print("복지카드 여부를 입력해 주세요.(y/n): ");
-        welfareCard = sc.next().charAt(0);
+        while (true) {
+            System.out.println("[입장권 계산]");
+            System.out.print("나이를 입력해 주세요.(숫자): ");
+            age = sc.nextInt();
+            if(age < 0) {
+                System.out.println("다시 입력해 주세요.");
+                continue;
+            }
 
-        price = caculateAdmission(age, admission, nationalMerit, welfareCard);
-        System.out.println("입장료: " + price);
+            System.out.print("입장시간을 입력해 주세요.(숫자입력): ");
+            admission = sc.nextInt();
+            if(admission < 0 || admission > 24) {
+                System.out.println("다시 입력해 주세요.");
+                continue;
+            }
+
+            System.out.print("국가유공자 여부를 입력해 주세요.(y/n): ");
+            nationalMerit = sc.next().charAt(0);
+            if(nationalMerit != 'y' && nationalMerit != 'n') {
+                System.out.println("다시 입력해 주세요.");
+                continue;
+            }
+
+            System.out.print("복지카드 여부를 입력해 주세요.(y/n): ");
+            welfareCard = sc.next().charAt(0);
+            if(welfareCard != 'y' && welfareCard != 'n') {
+                System.out.println("다시 입력해 주세요.");
+                continue;
+            }
+
+            price = caculateAdmission(age, admission, nationalMerit, welfareCard);
+            System.out.println("입장료: " + price);
+            System.out.println();
+        }
+
     }
 
     public static int caculateAdmission(int age, int admission, char nationalMerit, char welfareCard) {
