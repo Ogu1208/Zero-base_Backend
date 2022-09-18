@@ -4,10 +4,7 @@
 */
 
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class JavaMini7 {
     public static void main(String[] args) {
@@ -19,41 +16,43 @@ public class JavaMini7 {
         num = sc.nextInt();
 
         int[][] lotto = new int[num][6];
+        int[] winNum = new int[6];
 
         // 로또 번호 생성
         for (int i = 0; i < lotto.length; i++) {
             for (int j = 0; j < 6; j++) {
-                int n = (int) (Math.random() * 45) + 1;
-                lotto[i][j] = n;
+                lotto[i][j] = (int) (Math.random() * 45) + 1;
+                // 중복 제거
                 for (int k = 0; k < j; k++) {
-                    if (lotto[i][j] == lotto[i][k])
+                    if (lotto[i][j] == lotto[i][k]) {
                         j--;
-                    break;
+                        break;
+                    }
                 }
             }
             Arrays.sort(lotto[i]);
         }
 
-        // 로또 번호 생성
-        for (int i = 0; i < lotto.length; i++) {
-            for (int j = 0; j < 6; j++) {
-                int n = (int) (Math.random() * 45) + 1;
-                lotto[i][j] = n;
-                for (int k = 0; k < j; k++) {
-                    if (lotto[i][j] == lotto[i][k])
-                        j--;
+        // 당첨 번호 생성
+
+        for (int i = 0; i < 6; i++) {
+            winNum[i] = (int) (Math.random() * 45) + 1;
+            // 중복 제거
+            for (int j = 0; j < i; j++) {
+                if (winNum[i] == winNum[j]) {
+                    i--;
                     break;
                 }
             }
-            Arrays.sort(lotto[i]);
         }
+        Arrays.sort(winNum);
 
 
         // 번호 출력
         for (int i = 0; i < lotto.length; i++) {
             System.out.print((char) ('A' + i) + "\t");
             for (int j = 0; j < 6; j++) {
-                if(j==5) {
+                if (j == 5) {
                     System.out.printf("%02d", lotto[i][j]);
                 } else {
                     System.out.printf("%02d, ", lotto[i][j]);
@@ -61,5 +60,38 @@ public class JavaMini7 {
             }
             System.out.println();
         }
+
+
+        // 당첨 번호 출력
+        System.out.println("\n[로또 발표]");
+        System.out.print("\t");
+        for (int i = 0; i < winNum.length; i++) {
+            if (i == winNum.length - 1) {
+                System.out.printf("%02d", winNum[i]);
+            } else {
+                System.out.printf("%02d, ", winNum[i]);
+            }
+        }
+        System.out.println();
+
+        // 로또 당첨 비교
+        System.out.println("\n[내 로또 결과]");
+        for (int i = 0; i < num; i++) {
+            int count = 0;
+            System.out.print((char) ('A' + i) + "\t");
+            for (int j = 0; j < 6; j++) {
+                if (j == 5) {
+                    System.out.printf("%02d", lotto[i][j]);
+                } else {
+                    System.out.printf("%02d, ", lotto[i][j]);
+                }
+                for (int k = 0; k < 6; k++) {
+                    if(winNum[k] == lotto[i][j])
+                        count++;
+                }
+            }
+            System.out.printf(" => %d개 일치\n", count);
+        }
+
     }
 }
