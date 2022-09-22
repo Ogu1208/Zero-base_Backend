@@ -17,14 +17,35 @@ public class Main {
         int nA = 0;
         int nB = 0;
         int nAandB = 0;
-        
+
         // 기본 풀이
+        for (int item1 : dice1) {
+            for (int item2 : dice2) {
+                if ((item1 + item2) % 3 == 0) {
+                    nA += 1;
+                }
+                if ((item1 + item2) % 4 == 0) {
+                    nB += 1;
+                }
+                if ((item1 + item2) % 12 == 0) {
+                    nAandB += 1;
+                }
+            }
+        }
+        System.out.println("결과: " + (nA + nB - nAandB));
 
 
-        
         // HashSet 이용
-
-
+        HashSet<ArrayList> allCase = new HashSet<>();
+        for (int item1 : dice1) {
+            for (int item2 : dice2) {
+                if ((item1 + item2) % 3 == 0 || (item1 + item2) % 4 == 0) {
+                    ArrayList list = new ArrayList(Arrays.asList(item1, item2));
+                    allCase.add(list);  // HashSet을 이용해 중복은 알아서 제거
+                }
+            }
+        }
+        System.out.println("결과: " + allCase.size());
 
 //      2. 곱의 법칙
         System.out.println("== 곱의 법칙 ==");
@@ -32,6 +53,18 @@ public class Main {
         nA = 0;
         nB = 0;
 
+        for (int item1 : dice1) {
+            if (item1 % 3 == 0) {
+                nA++;
+            }
+        }
 
+        for (int item1 : dice2) {
+            if (item1 % 4 == 0) {
+                nA++;
+            }
+        }
+
+        System.out.println("결과: " + (nA * nB));
     }
 }

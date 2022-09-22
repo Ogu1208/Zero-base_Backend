@@ -5,6 +5,26 @@ package Practice.Math_04.src;// Practice1
 public class Practice1 {
     void permutation(int[] arr, int depth, int n, int r) {
 
+        if(depth == r) {
+            for (int i = 0; i < r; i++) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+            return;
+        }
+
+        for (int i = depth; i < n; i++) {
+            swap(arr, depth, i);
+            permutation(arr, depth + 1, n, r);
+            swap(arr, depth, i);  // 다시 원래대로 자리를 되돌림
+        }
+    }
+
+    void swap(int[] arr, int depth, int idx) {
+        // depth : 몇번째 자리수인지, idx : 어디와 자리를 바꿀건지
+        int tmp = arr[depth];
+        arr[depth] = arr[idx];
+        arr[idx] = tmp;
     }
 
 
