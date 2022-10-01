@@ -9,12 +9,33 @@ package Practice.LinearDS_05.src;// Practice3
 // (처음 위치는 1부터라고 가정)
 // 결과 연결 리스트: 1, 4, 3, 2, 5
 
+// 1 -> 2 - 3 -> 4 -> 5
+// 1    3 -> 2   4 -> 5
+// 1    4 -> 3 -> 2   5
+// 1 -> 4 -> 3 -> 2 -> 5
 
 public class Practice3 {
     public static LinkedList reverseList(LinkedList list, int left, int right) {
+        Node cur1 = null;
+        Node pre1 = null;
+
+        cur1 = list.head;
+        for (int i = 0; i < left - 1; i++) {
+            pre1 = cur1;
+            cur1 = cur1.next;
+        }
+
+        Node cur2 = cur1;
+        Node pre2 = pre1;
+        Node after = null;
+        for (int i = left; i <= right; i++) {
+            after = cur2.next;
+            pre2 = cur2;
+            cur2 = after;
+        }
         return null;
     }
-    
+
     public static void main(String[] args) {
         LinkedList linkedList = new LinkedList();
         linkedList.addData(1);

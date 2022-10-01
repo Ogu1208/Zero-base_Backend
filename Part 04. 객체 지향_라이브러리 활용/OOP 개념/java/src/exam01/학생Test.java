@@ -1,3 +1,5 @@
+package exam01;
+
 public class 학생Test {
     public static void main(String[] args) {
         학생 공부하는학생 = new 학생("박하은");  // 기본생성자

@@ -1,3 +1,5 @@
+package exam01;
+
 public class CreditCard {
     private long cardNumber;
     public String cardOwner;

@@ -29,7 +29,7 @@ class CircularLinkedList {
             this.tail = newNodeBi;
             newNodeBi.next = newNodeBi;
             newNodeBi.prev = newNodeBi;
-        } else if (beforeData == null) {
+        } else if (beforeData == null) {  // 끝에 데이터 추가
             NodeBi newNodeBi = new NodeBi(data, this.head, this.tail);
             this.tail.next= newNodeBi;
             this.head.prev = newNodeBi;
@@ -39,12 +39,12 @@ class CircularLinkedList {
             NodeBi pre = cur;
             do {
                 if (cur.data == beforeData) {
-                    if (cur == this.head) {
+                    if (cur == this.head) {   // head의 가장 앞에 추가
                         NodeBi newNodeBi = new NodeBi(data, this.head, this.tail);
                         this.tail.next = newNodeBi;
                         this.head.prev = newNodeBi;
                         this.head = newNodeBi;
-                    } else {
+                    } else {   // 중간에 추가
                         NodeBi newNodeBi = new NodeBi(data, cur, pre);
                         pre.next = newNodeBi;
                         cur.prev = newNodeBi;

@@ -1,3 +1,5 @@
+package exam01;
+
 public class 신용카드Test {
     public static void main(String[] args) {
         신용카드 내카드 = new 신용카드();

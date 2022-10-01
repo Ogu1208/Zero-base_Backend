@@ -1,3 +1,5 @@
+package exam01;
+
 public class 대학생Test {
 
     public static void main(String[] args) {

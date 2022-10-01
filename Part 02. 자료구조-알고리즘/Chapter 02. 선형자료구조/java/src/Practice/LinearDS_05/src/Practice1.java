@@ -10,7 +10,9 @@ class Node {
     int data;
     Node next;
 
-    Node() {}
+    Node() {
+    }
+
     Node(int data, Node next) {
         this.data = data;
         this.next = next;
@@ -20,7 +22,9 @@ class Node {
 class LinkedList {
     Node head;
 
-    LinkedList() {}
+    LinkedList() {
+    }
+
     LinkedList(Node node) {
         this.head = node;
     }
@@ -64,7 +68,7 @@ class LinkedList {
         }
     }
 
-    public void findData(int data) {
+    public boolean findData(int data) {
         if (this.isEmpty()) {
             System.out.println("List is empty");
         }
@@ -72,11 +76,13 @@ class LinkedList {
         Node cur = this.head;
         while (cur != null) {
             if (cur.data == data) {
-                System.out.println("Data exist!");
+//                System.out.println("Data exist!");
+                return true;
             }
             cur = cur.next;
         }
-        System.out.println("Data not found!");
+//        System.out.println("Data not found!");
+        return false;
     }
 
     public void showData() {
@@ -97,7 +103,16 @@ class LinkedList {
 
 public class Practice1 {
     public static LinkedList removeDup(LinkedList listBefore) {
-        return null;
+        LinkedList listAfter = new LinkedList();
+
+        Node cur = listBefore.head;
+        while (cur != null) {
+            if (listAfter.findData(cur.data) == false) {
+                listAfter.addData(cur.data);
+            }
+            cur = cur.next;
+        }
+        return listAfter;
     }
 
     public static void main(String[] args) {

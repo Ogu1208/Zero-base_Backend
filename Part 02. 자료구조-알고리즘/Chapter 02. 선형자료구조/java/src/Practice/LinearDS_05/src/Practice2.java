@@ -16,7 +16,30 @@ package Practice.LinearDS_05.src;// Practice2
 
 public class Practice2 {
     public static boolean checkPalindrome(LinkedList list) {
-        return false;
+        Node cur = list.head;
+        Node left = list.head;
+        Node right = null;
+
+        int cnt = 0;
+        while (cur != null) {
+            cnt++;  // 연결리스트 원소 세기
+            right = cur;  // right는 가장 끝을 가리킴
+            cur = cur.next;
+        }
+
+        Node prevRight = right;
+        for (int i = 0; i < cnt / 2; i++) {
+            if (left.data != right.data) {
+                return false;
+            }
+
+            left = left.next;
+            right = left;
+            while (right.next != prevRight) {  // 다시 left부터 이전의 right를 만날 때까지
+                right = right.next;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -42,6 +65,15 @@ public class Practice2 {
         linkedList3.addData(5);
         linkedList3.addData(1);
         System.out.println(checkPalindrome(linkedList3));
+
+        LinkedList linkedList4 = new LinkedList();
+        linkedList4.addData(1);
+        linkedList4.addData(3);
+        linkedList4.addData(5);
+        linkedList4.addData(5);
+        linkedList4.addData(3);
+        linkedList4.addData(1);
+        System.out.println(checkPalindrome(linkedList4));
 
     }
 }

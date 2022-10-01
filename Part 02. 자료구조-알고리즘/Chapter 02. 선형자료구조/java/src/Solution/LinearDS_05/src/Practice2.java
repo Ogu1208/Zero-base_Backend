@@ -67,5 +67,14 @@ public class Practice2 {
         linkedList3.addData(1);
         System.out.println(checkPalindrome(linkedList3));
 
+        LinkedList linkedList4 = new LinkedList();
+        linkedList4.addData(1);
+        linkedList4.addData(3);
+        linkedList4.addData(5);
+        linkedList4.addData(5);
+        linkedList4.addData(3);
+        linkedList4.addData(1);
+        System.out.println(checkPalindrome(linkedList4));
+
     }
 }

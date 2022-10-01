@@ -1,3 +1,5 @@
+package exam01;
+
 public class 신용카드 {
     public long 카드번호;
     public String 카드소유주;
