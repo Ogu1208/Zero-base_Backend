@@ -25,7 +25,7 @@ class MyDeque {
     }
 
     public boolean isFull() {
-        return (this.rear + 1)  % this.arr.length == this.front;
+        return (this.rear + 1) % this.arr.length == this.front;
     }
 
     public void addFirst(int data) {
@@ -49,7 +49,26 @@ class MyDeque {
     }
 
     public void addMiddle(int data) {
+        if (this.isFull()) {
+            System.out.println("Deque is full!");
+            return;
+        }
 
+        int elements = this.rear - this.front;
+        if (elements < 0) {
+            elements = this.arr.length + elements;
+        }
+
+        // 중간 지점
+        int mid = (this.rear - elements / 2 + this.arr.length) % this.arr.length + 1;
+
+        int start = (this.rear + 1) % this.arr.length;
+        int end = (this.rear - elements / 2 + this.arr.length) % this.arr.length;
+        for (int i = start; i != end; i = (i - 1 + this.arr.length) % this.arr.length) {
+            this.arr[i] = this.arr[(i - 1 + this.arr.length) % this.arr.length];
+        }
+        this.arr[mid] = data;
+        this.rear = (this.rear + 1) % this.arr.length;
     }
 
     public Integer removeFirst() {

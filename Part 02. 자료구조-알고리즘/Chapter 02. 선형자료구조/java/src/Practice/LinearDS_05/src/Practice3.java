@@ -30,10 +30,14 @@ public class Practice3 {
         Node after = null;
         for (int i = left; i <= right; i++) {
             after = cur2.next;
+            cur2.next = pre2;
             pre2 = cur2;
             cur2 = after;
         }
-        return null;
+        pre1.next = pre2;
+        cur1.next = cur2;
+
+        return list;
     }
 
     public static void main(String[] args) {

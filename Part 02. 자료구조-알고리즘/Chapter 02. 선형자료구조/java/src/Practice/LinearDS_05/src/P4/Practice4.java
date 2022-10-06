@@ -13,7 +13,9 @@ class Node {
     String data;
     Node next;
 
-    Node() {}
+    Node() {
+    }
+
     Node(String data, Node next) {
         this.data = data;
         this.next = next;
@@ -24,7 +26,9 @@ class LinkedList {
     Node head;
     char alphabet;
 
-    LinkedList() {}
+    LinkedList() {
+    }
+
     LinkedList(Node node, char alphabet) {
         this.head = node;
         this.alphabet = alphabet;
@@ -105,7 +109,31 @@ class LinkedList {
 public class Practice4 {
 
     public static void dataCollect(String[] data) {
+        HashSet<Character> set = new HashSet<>();  // 앞글자 따기
 
+        for (String item : data) {
+            set.add(item.toCharArray()[0]);
+        }
+        System.out.println(set);
+
+        Character[] arr = set.toArray(new Character[0]);
+        LinkedList[] linkedList = new LinkedList[set.size()];
+        for (int i = 0; i < linkedList.length; i++) { // 각각의 해당 linkedList를 만들어야 접근 가능
+            linkedList[i] = new LinkedList(null, arr[i]);  // 각 위치에 알파벳 첫글자
+        }
+
+        for (String item : data) {
+            for (LinkedList list : linkedList) {
+                if (list.alphabet == item.toCharArray()[0]) {
+                    list.addData(item);
+                }
+            }
+        }
+
+        for (LinkedList list : linkedList) {
+            System.out.print(list.alphabet + " : ");
+            list.showData();
+        }
     }
 
     public static void main(String[] args) {

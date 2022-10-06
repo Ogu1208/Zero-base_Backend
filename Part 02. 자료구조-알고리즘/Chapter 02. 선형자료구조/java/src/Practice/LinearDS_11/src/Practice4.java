@@ -17,17 +17,29 @@ class MyDeque2 {
     }
 
     public boolean isFull() {
-        return (this.rear + 1)  % this.arr.length == this.front;
+        return (this.rear + 1) % this.arr.length == this.front;
     }
 
     public void increaseSize() {
+        System.out.println("MyDeque2.increaseSize");
+        int[] arrTmp = this.arr.clone();
+        this.arr = new int[this.arr.length * 2];
 
+        int start = (this.front + 1) % arrTmp.length;
+        int end = (this.rear + 1) % arrTmp.length;
+
+        int idx = 1;
+        for (int i = start; i != end; i = (i + 1) % arrTmp.length) {
+            this.arr[idx++] = arrTmp[i];
+        }
+
+        this.front = 0;
+        this.rear = idx - 1;
     }
 
     public void addFirst(int data) {
         if (this.isFull()) {
-            System.out.println("Deque is full!");
-            return;
+            increaseSize();
         }
 
         this.arr[front] = data;
@@ -36,8 +48,7 @@ class MyDeque2 {
 
     public void addLast(int data) {
         if (this.isFull()) {
-            System.out.println("Deque is full!");
-            return;
+            increaseSize();
         }
 
         this.rear = (this.rear + 1) % this.arr.length;

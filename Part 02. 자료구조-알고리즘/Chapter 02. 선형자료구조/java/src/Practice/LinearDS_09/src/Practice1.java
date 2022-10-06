@@ -14,9 +14,25 @@ package Practice.LinearDS_09.src;// Practice1
 // 결과: 6
 
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.stream.IntStream;
+
 public class Practice1 {
     public static int findLastCard(int N) {
-        return 0;
+        Queue queue = new LinkedList();
+
+        IntStream.range(1, N + 1).forEach(x -> queue.add(x));
+        System.out.println(queue);
+
+        while (queue.size() > 1) {
+            queue.remove();
+            int data = (int) queue.remove();
+            queue.add(data);
+            System.out.println(queue);
+        }
+
+        return (int) queue.remove();
     }
 
     public static void main(String[] args) {

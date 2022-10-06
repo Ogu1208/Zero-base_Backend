@@ -15,11 +15,31 @@ package Practice.LinearDS_09.src;// Practice2
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.stream.IntStream;
 
 public class Practice2 {
 
     public static ArrayList getJosephusPermutation(int N, int K) {
-        return null;
+        Queue queue = new LinkedList();
+        ArrayList result = new ArrayList();
+
+        IntStream.range(1, N + 1).forEach(x -> queue.add(x));
+
+        int cnt = 0;
+        while (!queue.isEmpty()) {
+            int data = (int) queue.remove();
+            cnt += 1;
+
+            if (cnt % K == 0) {
+                result.add(data);
+            } else {
+                queue.add(data);
+            }
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {

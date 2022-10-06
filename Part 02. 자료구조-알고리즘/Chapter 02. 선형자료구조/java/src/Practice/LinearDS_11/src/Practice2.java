@@ -14,9 +14,30 @@ package Practice.LinearDS_11.src;// Practice1
 // 결과: false
 
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class Practice2 {
     public static boolean checkPalindrome(String str) {
-        return false;
+        Deque deque = new ArrayDeque();
+        boolean isFront = true;
+        boolean isPalindrome = true;
+
+        for (String s : str.split("")) {
+            deque.addFirst(s);
+        }
+
+        while (!deque.isEmpty()) {
+            String s1 = (String) deque.pollFirst();
+            String s2 = (String) deque.pollLast();
+
+            if (s1 != null && s2 != null && !s1.equals(s2)) {
+                isPalindrome = false;
+                break;
+            }
+            // 길이가 홀수인 경우 s1은 가운데글자, s2는 null이므로 if문제 아예 걸리지 않음
+        }
+        return isPalindrome;
     }
 
     public static void main(String[] args) {
