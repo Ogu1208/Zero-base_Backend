@@ -4,8 +4,20 @@ import java.util.Arrays;
 
 public class Practice1 {
 
-    public static int[] solution(int[] arr){
+    public static int[] solution(int[] arr) {
         int[] arrNew = new int[arr.length];
+
+        int idx = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (arrNew[idx] == 0) {  // 값을 넣을 부분을 찾음 (값이 아직 없음)
+                    break;
+                }
+                idx = (idx + 1) % arr.length;
+            }
+            arrNew[idx] = arr[i];
+            idx = (idx + arr[i]) % arr.length;
+        }
 
 
         return arrNew;
