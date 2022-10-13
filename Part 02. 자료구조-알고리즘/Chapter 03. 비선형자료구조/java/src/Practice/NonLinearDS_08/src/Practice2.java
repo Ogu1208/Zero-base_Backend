@@ -72,6 +72,21 @@ class MaxHeap{
 
 public class Practice2 {
     public static void solution(MinHeap minHeap) {
+        MaxHeap maxHeap = new MaxHeap();
+
+        System.out.print("오름차순: ");
+        while(minHeap.heap.size() != 1) {
+            int data = minHeap.delete();
+            System.out.print(data + " ");
+            maxHeap.insert(data);
+        }
+        System.out.println();
+
+        System.out.print("내림차순: ");
+        while(maxHeap.heap.size() != 1) {
+            System.out.print(maxHeap.delete() + " ");
+        }
+        System.out.println();
 
     }
 

@@ -4,7 +4,7 @@ package Practice.NonLinearDS_08.src;// Practice 1
 
 import java.util.ArrayList;
 
-class MinHeap{
+class MinHeap {
     ArrayList<Integer> heap;
 
     public MinHeap() {
@@ -73,7 +73,53 @@ class MinHeap{
 
 public class Practice1 {
     public static void solution(MinHeap minHeap, int from, int to) {
+        for (int i = 0; i < minHeap.heap.size(); i++) {
+            if (minHeap.heap.get(i) == from) {
+                minHeap.heap.set(i, to);
 
+                moveUp(minHeap, i);
+                moveDown(minHeap, i);
+            }
+        }
+    }
+
+    public static void moveUp(MinHeap minHeap, int idx) {
+        int cur = idx;
+
+        while (cur > 1 && minHeap.heap.get(cur / 2) > minHeap.heap.get(cur)) {
+            int parentVal = minHeap.heap.get(cur / 2);
+            minHeap.heap.set(cur / 2, minHeap.heap.get(cur));
+            minHeap.heap.set(cur, parentVal);
+
+            cur /= 2;
+        }
+    }
+
+    public static void moveDown(MinHeap minHeap, int idx) {
+        int cur = idx;
+
+        while (true) {
+            int leftIdx = cur * 2;
+            int rightIdx = cur * 2 + 1;
+            int targetIdx = -1;
+
+            if (rightIdx < minHeap.heap.size()) {  // 자식이 양쪽에 다 있는 경우
+                targetIdx = minHeap.heap.get(leftIdx) < minHeap.heap.get(rightIdx) ? leftIdx : rightIdx;
+            } else if (leftIdx < minHeap.heap.size()) {  // 왼쪽자식노드 하나인 경우
+                targetIdx = leftIdx;
+            } else {
+                break;
+            }
+
+            if (minHeap.heap.get(cur) < minHeap.heap.get(targetIdx)) {  // 현재쪽이 더 작으면 바꾸지 않아도 됨
+                break;
+            } else {
+                int parentVal = minHeap.heap.get(cur);
+                minHeap.heap.set(cur, minHeap.heap.get(targetIdx));
+                minHeap.heap.set(targetIdx, parentVal);
+                cur = targetIdx;
+            }
+        }
     }
 
     public static void main(String[] args) {

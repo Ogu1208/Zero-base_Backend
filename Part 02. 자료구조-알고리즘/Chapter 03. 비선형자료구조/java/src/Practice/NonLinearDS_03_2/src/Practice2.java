@@ -3,10 +3,60 @@ package Practice.NonLinearDS_03_2.src;// AVL 트리 - 삭제
 class AVLTree2 extends AVLTree {
 
     public void delete(int key) {
+        this.head = delete(this.head, key);
     }
 
     public Node delete(Node node, int key) {
-        return null;
+        if (node == null) {
+            return null;
+        }
+        if (key < node.key) {
+            node.left = delete(node.left, key);
+        } else if (key > node.key) {
+            node.right = delete(node.right, key);
+        } else {
+            if (node.left == null) {  // 자식이 하나인 경우(오른쪽자식)
+                return node.right;
+            } else if (node.right == null) { // 자식이 하나인 경우(왼쪽자식)
+                return node.left;
+            } else {  // 자식 노드가 둘인 경우 (좌측에서 가장 큰 노드)
+                Node predecessor = node;
+                Node successor = node.left;
+
+                while (successor.right != null) {
+                    predecessor = successor;
+                    successor = successor.right;
+                }
+
+                predecessor.right = successor.left;
+                node.key = successor.key;
+            }
+
+            node.height = Math.max(height(node.left), height(node.right)) + 1;  // 높이 갱신
+
+            int balance = getBalance(node);
+
+            // LL
+            if (balance > 1 && getBalance(node.left) > 0) {
+                return rightRotate(node);
+            }
+
+            // RR
+            if (balance < -1 && getBalance(node.right) < 0) {
+                return leftRotate(node);
+            }
+
+            // LR
+            if (balance > 1 && getBalance(node.left) < 0) {
+                return lrRotate(node);
+            }
+
+            // RL
+            if (balance < -1 && getBalance(node.right) > 0) {
+                return rlRotate(node);
+            }
+        }
+        return node;
     }
 }
 
