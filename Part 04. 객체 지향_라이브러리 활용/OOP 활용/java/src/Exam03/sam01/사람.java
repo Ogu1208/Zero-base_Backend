@@ -12,4 +12,8 @@ public class 사람 {
         this.이름 = 이름;
         this.번호 = 번호;
     }
+
+    public long get주민번호() {
+        return 번호;
+    }
 }
