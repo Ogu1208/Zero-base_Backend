@@ -19,5 +19,13 @@ public class 교직원 extends 사람{
         return 번호;
     }
 
+    @Override
+    public void 정보출력() {
+        System.out.println("[교직원정보] ===============");
+        System.out.println("이름: " + 이름);
+        System.out.println("주민번호: " + super.번호);
+        System.out.println("학교명: " + 학교명);
+        System.out.println("교원번호: " + 번호);
+    }
 
 }
