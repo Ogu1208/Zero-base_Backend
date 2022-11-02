@@ -16,8 +16,18 @@ package Practice.Algorithm_09.src;// Practice
 
 public class Practice1 {
     public static boolean solution(int[] nums) {
+        int pos = 0;
 
-        return false;
+        for (int i = 0; i < nums.length; i++) {
+            if (pos < i) {
+                return false;
+            } else if (pos >= nums.length - 1) {
+                return true;
+            }
+
+            pos = Math.max(pos, i + nums[i]);
+        }
+        return true;
     }
 
     public static void main(String[] args) {

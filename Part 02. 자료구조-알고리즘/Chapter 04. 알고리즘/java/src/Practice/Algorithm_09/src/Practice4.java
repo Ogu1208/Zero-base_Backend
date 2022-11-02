@@ -18,8 +18,29 @@ package Practice.Algorithm_09.src;// Practice
 
 public class Practice4 {
     public static int solution(int[] gas, int[] cost) {
+        if (gas == null || cost == null) {
+            return 0;
+        }
 
-        return 0;
+        if (gas.length != cost.length) {
+            return -1;
+        }
+
+        int curGas = 0;
+        int totalGas = 0;
+        int startPos = 0;
+
+        for (int i = 0; i < gas.length; i++) {
+            curGas += gas[i] - cost[i];
+            totalGas += gas[i] - cost[i];
+
+            if (curGas < 0) {
+                startPos = i + 1;
+                curGas = 0;
+            }
+        }
+
+        return totalGas >= 0 ? startPos : -1;
     }
 
     public static void main(String[] args) {

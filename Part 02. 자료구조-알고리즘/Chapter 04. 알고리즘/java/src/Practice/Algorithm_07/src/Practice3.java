@@ -13,11 +13,22 @@ package Practice.Algorithm_07.src;// Practice
 
 public class Practice3 {
     public static String solution(String s) {
-
+        if (s == null) {
             return null;
+        }
+        if (s.length() < 2) {
+            return s;
+        }
+
+        s = removeSpaces(s);
+        char[] cArr = s.toCharArray();
+        reverseString(cArr, 0, s.length() - 1);
+        reverseWords(cArr, s.length());
+
+        return new String(cArr);
     }
 
-    public static String removeSpaces(String s) {
+    public static String removeSpaces(String s) {  // 공백 하나만 남기기
         int p1 = 0;
         int p2 = 0;
 
@@ -65,11 +76,11 @@ public class Practice3 {
         while (p1 < length) {
             // p1, p2 로 공백 제외 단어 부분 시작, 끝 설정
             while (p1 < p2 || p1 < length && cArr[p1] == ' ') {
-                p1++;
+                p1++;    // 공백인 곳에서 멈춤
             }
-            
-            while (p2 < p1 || p2 < length && cArr[p2] != ' ')  {
-                p2++;
+
+            while (p2 < p1 || p2 < length && cArr[p2] != ' ') {
+                p2++;   // 공백이 아닌 곳에서 멈춤
             }
 
             reverseString(cArr, p1, p2 - 1);
