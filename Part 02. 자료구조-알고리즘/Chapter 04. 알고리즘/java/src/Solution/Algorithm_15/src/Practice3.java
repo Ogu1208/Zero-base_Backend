@@ -52,8 +52,8 @@ public class Practice3 {
                 }
 
                 submit[idx] = i;
-                
-                // 정답, 오답에 따른 분기
+
+                // 5지 선다 중 정답 하나씩 마킹하는 과정 backtracking
                 if (sols[idx] == i) {
                     backTracking(sols, submit, correctCnt + 1, idx + 1);
                 } else {

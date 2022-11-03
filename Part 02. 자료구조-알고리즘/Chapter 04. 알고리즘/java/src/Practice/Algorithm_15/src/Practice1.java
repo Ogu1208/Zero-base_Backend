@@ -7,10 +7,34 @@ package Practice.Algorithm_15.src;// Practice1
 // m: 2
 // 출력: [1, 2], [1, 3], [2, 1], [2, 3], [3, 1], [3, 2]
 
+import java.util.Arrays;
+
 public class Practice1 {
 
-    public static void solution(int n, int m) {
+    public static boolean[] visited;
+    public static int[] out;
 
+    public static void solution(int n, int m) {
+        visited = new boolean[n];
+        out = new int[m];
+        permutation(n, m, 0);
+
+    }
+
+    public static void permutation(int n, int m, int depth) {
+        if (depth == m) {
+            System.out.println(Arrays.toString(out));
+            return;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if(!visited[i]) {
+                visited[i] = true;
+                out[depth] = i + 1;
+                permutation(n, m, depth + 1);
+                visited[i] = false;
+            }
+        }
     }
 
     public static void main(String[] args) {
