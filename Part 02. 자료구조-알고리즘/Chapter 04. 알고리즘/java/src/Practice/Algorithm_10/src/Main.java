@@ -3,8 +3,15 @@ package Practice.Algorithm_10.src;
 public class Main {
 
     public static int getMax(int[] arr, int left, int right) {
+        int m = (left + right) / 2;
+        if (left == right) {
+            return arr[left];
+        }
 
-        return 0;
+        left = getMax(arr, left, m);
+        right = getMax(arr, m + 1, right);
+
+        return (left > right) ? left : right;
     }
 
 
