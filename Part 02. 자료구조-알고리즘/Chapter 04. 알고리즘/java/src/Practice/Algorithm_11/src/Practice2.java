@@ -25,10 +25,54 @@ public class Practice2 {
             return null;
         }
 
-        return null;
+        return divideList(lists, 0, lists.length - 1);
     }
 
+    public static Node divideList(Node[] lists, int left, int right) {
+        if (left == right) {
+            return lists[left];
+        }
 
+        int mid = left + (right - left) / 2;
+        Node l1 = divideList(lists, left, mid);
+        Node l2 = divideList(lists, mid + 1, right);
+
+        return mergeList(l1, l2);
+    }
+
+    public static Node mergeList(Node l1, Node l2) {
+        if (l1 == null) {
+            return l2;
+        }
+
+        if (l2 == null) {
+            return l1;
+        }
+
+        Node merge = new Node(0);
+        Node cur = merge;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.next = l1;
+                l1 = l1.next;
+            } else {
+                cur.next = l2;
+                l2 = l2.next;
+            }
+            cur = cur.next;
+        }
+
+        if (l1 != null) {
+            cur.next = l1;
+        }
+
+        if (l2 != null) {
+            cur.next = l2;
+        }
+
+        return merge.next;   // 맨 앞 0이 포함되지 않도록 return
+    }
 
     // 문제에 주어진 2차원 배열을 링크드 리스트로 구성
     public static void setUpLinkedList(Node[] node, int[][] lists) {
