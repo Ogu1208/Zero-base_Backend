@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mariadb://192.168.0.21:3306/testdb3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="kobis_db" uuid="7c65c758-3889-4b4d-bdd1-8a077fd4d44e">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://192.168.0.21:3306/kobis_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
