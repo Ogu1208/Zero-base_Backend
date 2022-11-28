@@ -26,6 +26,11 @@ public class MoneyAdapter implements PaymentInterface{
     }
 
     @Override
+    public PayMethodType getPayMethodType() {
+        return PayMethodType.MONEY;
+    }
+
+    @Override
     public PaymentResult payment(Integer payAmount) {
         MoneyUseResult moneyUseResult = use(payAmount);
 

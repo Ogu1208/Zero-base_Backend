@@ -1,5 +1,6 @@
 package com.zerobase.convpay;
 
+import com.zerobase.convpay.config.ApplicationConfig;
 import com.zerobase.convpay.dto.PayCancelRequest;
 import com.zerobase.convpay.dto.PayCancelResponse;
 import com.zerobase.convpay.dto.PayRequest;
@@ -13,11 +14,13 @@ public class UserClient {
         // `사용자` -> 편결이 -> 머니
 
         // 편결이 불러오기
-        ConveniencePayService conveniencePayService = new ConveniencePayService();
+        ApplicationConfig applicationConfig = new ApplicationConfig();
+//        ConveniencePayService conveniencePayService = new ConveniencePayService();
+        ConveniencePayService conveniencePayService = applicationConfig.conveniencePayServiceDiscountPayMethod();
 
 
         // 1. 현금, G25, 결제 1000원
-        PayRequest payRequest = new PayRequest(PayMethodType.CARD, ConvenienceType.G25, 1000);
+        PayRequest payRequest = new PayRequest(PayMethodType.CARD, ConvenienceType.G25, 50);
         PayResponse payResponse = conveniencePayService.pay(payRequest);
 
         System.out.println(payResponse); // 객체의 toString이 불러짐
