@@ -18,21 +18,21 @@ class ConveniencePayServiceTest {
     @Test
     void pay_success() {
         // given
-        PayRequest payRequest = new PayRequest(PayMethodType.MONEY, ConvenienceType.G25, 100);
+        PayRequest payRequest = new PayRequest(PayMethodType.MONEY, ConvenienceType.G25, 50);
 
         // when
         PayResponse payResponse = conveniencePayService.pay(payRequest);
 
         // then
         assertEquals(PayResult.SUCCESS, payResponse.getPayResult());
-        assertEquals(100, payResponse.getPaidAmount());
+        assertEquals(35, payResponse.getPaidAmount());
     }
 
 
     @Test
     void pay_fail() {
         // given
-        PayRequest payRequest = new PayRequest(PayMethodType.MONEY, ConvenienceType.G25, 1000_001);
+        PayRequest payRequest = new PayRequest(PayMethodType.MONEY, ConvenienceType.G25, 1500_001);
 
         // when
         PayResponse payResponse = conveniencePayService.pay(payRequest);

@@ -9,7 +9,8 @@ import com.zerobase.convpay.type.*;
 public class ConveniencePayService {  // 편결이
     private final MoneyAdapter moneyAdapter = new MoneyAdapter();
     private final CardAdapter cardAdapter = new CardAdapter();
-    private final PointAdapter pointAdapter = new PointAdapter();
+//    private final DiscountInterface discountInterface = new DiscountByPayMethod();  // 결제 방식에 따른 할인
+    private final DiscountInterface discountInterface = new DiscountByConvenience();  // 편의점에 따른 할인
 
 
     // 결제
@@ -18,13 +19,12 @@ public class ConveniencePayService {  // 편결이
 
         if (payRequest.getPayMethodType() == PayMethodType.CARD) {
             paymentInterface = cardAdapter;
-        } else if (payRequest.getPayMethodType() == PayMethodType.MONEY){
-            paymentInterface = moneyAdapter;
         } else {
-            paymentInterface = pointAdapter;
+            paymentInterface = moneyAdapter;
         }
 
-        PaymentResult payment = paymentInterface.payment(payRequest.getPayAmount());
+        Integer discountedAmount = discountInterface.getDiscountedAmount(payRequest);
+        PaymentResult payment = paymentInterface.payment(discountedAmount);
 
         // fail fast
         if (payment == PaymentResult.PAYMENT_FAIL) {
@@ -32,7 +32,7 @@ public class ConveniencePayService {  // 편결이
         }
 
         // Success Case
-        return new PayResponse(PayResult.SUCCESS, payRequest.getPayAmount());
+        return new PayResponse(PayResult.SUCCESS, discountedAmount);
 
     }
 
