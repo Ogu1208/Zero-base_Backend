@@ -18,7 +18,7 @@ public class UserClient {
 
         // 편결이 불러오기 (Spring)
         ApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("spring-config.xml");
+                new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
         ConveniencePayService conveniencePayService =
                 applicationContext.getBean("conveniencePayService", ConveniencePayService.class);
