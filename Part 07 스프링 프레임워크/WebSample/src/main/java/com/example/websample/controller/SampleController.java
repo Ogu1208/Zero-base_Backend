@@ -41,45 +41,7 @@ public class SampleController {
     }
 
 //    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(IllegalAccessException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalAccessException(
-            IllegalAccessException e){
-        log.error("IllegalAccessException is occurred.", e);
 
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(new ErrorResponse(ErrorCode.TOO_BIG_ID_ERROR,
-                        "IllegalAccessException is occurred."));
-
-
-    }
-
-    @ExceptionHandler(WebSampleException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalAccessException(
-            WebSampleException e){
-        log.error("WebSampleException is occurred.", e);
-
-        return ResponseEntity
-                .status(HttpStatus.INSUFFICIENT_STORAGE)
-                .body(new ErrorResponse(e.getErrorCode(),
-                        "WebSampleException is occurred."));
-
-
-    }
-
-//    특정 exception이 아닌 나머지 일반적인 exception들 묶어서 처리
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(
-            Exception e){
-        log.error("Exception is occurred.", e);
-
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR,
-                        "Exception is occurred."));
-
-
-    }
 
 
     @DeleteMapping("/order/{orderId}")
