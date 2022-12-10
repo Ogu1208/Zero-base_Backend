@@ -11,6 +11,7 @@ spring:
     console:
       enabled: true
   jpa:
+    # 테이블 생성 이후로 sql문을 실행 ( 테이블 생성 전 실행으로 오류가 뜨는 것을 방지
     defer-datasource-initialization: true
     database-platform: H2
     hibernate:
