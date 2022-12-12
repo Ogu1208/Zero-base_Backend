@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+// Controller <-> Service 통신
 public class AccountDto {
     private Long userId;
     private String accountNumber;

@@ -5,6 +5,7 @@ import com.example.account.domain.AccountUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     // Account - accountNumber를 통해서 검색을 해서 결과 반환
     Optional<Account> findByAccountNumber(String AccountNumber);
+
+    // account, accountUser 가 N : 1 매핑되어있어서 JPA 문법으로 자동 생성
+    List<Account> findByAccountUser(AccountUser accountUser);
 }
