@@ -6,6 +6,7 @@ import com.example.account.dto.AccountDto;
 import com.example.account.exception.AccountException;
 import com.example.account.repository.AccountRepository;
 import com.example.account.repository.AccountUserRepository;
+import com.example.account.type.AccountStatus;
 import com.example.account.type.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,7 +48,7 @@ class AccountServiceTest {
                 .willReturn(Optional.of(user));
         given(accountRepository.findFirstByOrderByIdDesc())  // 기존에 있었던 가장 최근 account
                 .willReturn(Optional.of(Account.builder()
-                                .accountNumber("1000000012").build()));
+                        .accountNumber("1000000012").build()));
         given(accountRepository.save(any()))  // 임의의 값 return
                 .willReturn(Account.builder()
                         .accountUser(user)
@@ -56,7 +56,7 @@ class AccountServiceTest {
 
         // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
         // (captor - 실제로 저장이 되는 값)
-       ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
+        ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
 
         // when
         AccountDto accountDto = accountService.createAccount(1L, 1000L);
@@ -65,7 +65,6 @@ class AccountServiceTest {
         verify(accountRepository, times(1)).save(captor.capture());
         assertEquals(12L, accountDto.getUserId());
         assertEquals("1000000013", captor.getValue().getAccountNumber());
-
     }
 
 
@@ -115,7 +114,7 @@ class AccountServiceTest {
 
     @Test
     @DisplayName("유저 당 최대 계좌는 10개")
-    void  createAccount_maxAccountIs10() { // userAccount -> accountRepository 조회
+    void createAccount_maxAccountIs10() { // userAccount -> accountRepository 조회
         // given
         AccountUser user = AccountUser.builder()
                 .id(15L)
@@ -131,6 +130,156 @@ class AccountServiceTest {
 
         // then
         assertEquals(ErrorCode.MAX_ACCOUNT_PER_USER_10, exception.getErrorCode());
+    }
+
+    @Test
+    void deleteAccountSuccess() {
+        // given
+        AccountUser user = AccountUser.builder()
+                .id(12L)
+                .name("Pobi").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(user));
+        given(accountRepository.findByAccountNumber(anyString()))  // 기존에 있었던 가장 최근 account
+                .willReturn(Optional.of(Account.builder()
+                        .accountUser(user)
+                        .balance(0L)
+                        .accountNumber("1000000012").build()));
+
+        // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
+        // (captor - 실제로 저장이 되는 값)
+        ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
+
+        // when
+        AccountDto accountDto = accountService.deleteAccount(1L, "1234567890");
+
+        // then
+        verify(accountRepository, times(1)).save(captor.capture());
+        assertEquals(12L, accountDto.getUserId());
+        assertEquals("1000000012", captor.getValue().getAccountNumber());
+        assertEquals(AccountStatus.UNREGISTERED, captor.getValue().getAccountStatus());
+    }
+
+    @Test
+    @DisplayName("해당 유저 없음 - 계좌 해지 실패")
+    void deleteAccount_UserNotFound() {
+        // given
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.empty());  // exception 발생
+
+        // when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.deleteAccount(1L, "1234567890"));
+
+        // then
+        assertEquals(ErrorCode.USER_NOT_FOUND, exception.getErrorCode());
+
+    }
+
+    @Test
+    @DisplayName("해당 계좌 없음 - 계좌 해지 실패")
+    void deleteAccount_AccountNotFound() {
+        // given
+        AccountUser user = AccountUser.builder()
+                .id(12L)
+                .name("Pobi").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(user));
+        given(accountRepository.findByAccountNumber(anyString()))  // 기존에 있었던 가장 최근 account
+                .willReturn(Optional.empty());
+
+        // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
+        // (captor - 실제로 저장이 되는 값)
+        ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
+
+        // when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.deleteAccount(1L, "1234567890"));
+
+        // then
+        assertEquals(ErrorCode.ACCOUNT_NOT_FOUND, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("계좌 소유주가 일치하지 않음")
+    void deleteAccountFailed_userUnMatch() {
+        // given
+        AccountUser pobi = AccountUser.builder()
+                .id(12L)
+                .name("Pobi").build();
+        AccountUser harry = AccountUser.builder()
+                .id(13L)
+                .name("Harry").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(pobi));  // pobi를 찾았는데
+        given(accountRepository.findByAccountNumber(anyString()))  // 기존에 있었던 가장 최근 account
+                .willReturn(Optional.of(Account.builder()
+                        .accountUser(harry)  // 찾은 계좌의 소유주는 harry일 경우
+                        .balance(0L)
+                        .accountNumber("1000000012").build()));
+
+        // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
+        // (captor - 실제로 저장이 되는 값)
+
+        // when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.deleteAccount(1L, "1234567890"));
+
+        // then
+        assertEquals(ErrorCode.USER_ACCOUNT_UN_MATCH, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("해지할 계좌에 잔액이 있는 경우 해지 실패")
+    void deleteAccountFailed_balanceNotEmpty() {
+        // given
+        AccountUser pobi = AccountUser.builder()
+                .id(12L)
+                .name("Pobi").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(pobi));  // pobi를 찾았는데
+        given(accountRepository.findByAccountNumber(anyString()))  // 기존에 있었던 가장 최근 account
+                .willReturn(Optional.of(Account.builder()
+                        .accountUser(pobi)  // 찾은 계좌의 소유주는 harry일 경우
+                        .balance(100L)
+                        .accountNumber("1000000012").build()));
+
+        // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
+        // (captor - 실제로 저장이 되는 값)
+
+        // when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.deleteAccount(1L, "1234567890"));
+
+        // then
+        assertEquals(ErrorCode.BALANCE_NOT_EMPTY, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("이미 해지된 계좌는 계좌 해지 실패")
+    void deleteAccountFailed_alreadyUnregistered() {
+        // given
+        AccountUser pobi = AccountUser.builder()
+                .id(12L)
+                .name("Pobi").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(pobi));  // pobi를 찾았는데
+        given(accountRepository.findByAccountNumber(anyString()))  // 기존에 있었던 가장 최근 account
+                .willReturn(Optional.of(Account.builder()
+                        .accountUser(pobi)  // 찾은 계좌의 소유주는 harry일 경우
+                        .accountStatus(AccountStatus.UNREGISTERED)
+                        .balance(0L)
+                        .accountNumber("1000000012").build()));
+
+        // captor 를 사용해 생성된 계좌가 가장 최근 계좌번호 + 1임을 확인인
+        // (captor - 실제로 저장이 되는 값)
+
+        // when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.deleteAccount(1L, "1234567890"));
+
+        // then
+        assertEquals(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED, exception.getErrorCode());
     }
 
 }

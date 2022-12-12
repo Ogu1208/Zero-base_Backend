@@ -96,6 +96,8 @@ public class AccountService {
         account.setAccountStatus(AccountStatus.UNREGISTERED);
         account.setUnregisteredAt(LocalDateTime.now());
 
+        accountRepository.save(account);  // 테스트를 위해 작성
+
         // AccountDto로 변환해서 반환
         return AccountDto.fromEntity(account);
     }
@@ -113,7 +115,7 @@ public class AccountService {
 
         // 5. 잔액이 있는 경우
         if (account.getBalance() > 0) {
-            throw new AccountException(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED);
+            throw new AccountException(ErrorCode.BALANCE_NOT_EMPTY);
         }
     }
 }
