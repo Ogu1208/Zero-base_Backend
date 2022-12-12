@@ -15,4 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     // accountUser가 @ManyToOne으로 설정되어있어서 가능
     // Account:User ( N : 1 )
     Integer countByAccountUser(AccountUser accountUser);
+
+    // Account - accountNumber를 통해서 검색을 해서 결과 반환
+    Optional<Account> findByAccountNumber(String AccountNumber);
 }
