@@ -51,17 +51,6 @@ public class TransactionService {
 
         account.useBalance(amount);
 
-        Transaction transaction = transactionRepository.save(
-                Transaction.builder()
-                        .transactionType(USE)
-                        .transactionResultType(S)
-                        .account(account)
-                        .amount(amount)
-                        .balanceSnapshot(account.getBalance())
-                        .transactionId(UUID.randomUUID().toString().replace("-", ""))
-                        .transactedAt(LocalDateTime.now())
-                        .build()
-        );
 
         return TransactionDto.fromEntity(saveAndGetTransaction(S, account, amount));
     }
