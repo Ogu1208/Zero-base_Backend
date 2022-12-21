@@ -20,7 +20,6 @@ public class CancelBalance {
     @AllArgsConstructor
     public static class Request {
         @NotBlank
-        @Min(1)  // 0인 유저는 없도록
         private String transactionId;
 
         @NotBlank
